@@ -1,0 +1,91 @@
+<section>
+    <form action="/admin/product/<%=product.id%>?_method=PUT" method="POST"    enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" name="name"  id="name" value="<%=product.name %>" placeholder="Product Name" required>
+      </div>
+      <div class="form-group">
+        <label for="category">category</label>
+        <select name="category" id="category">'
+          <% for(let category of categories) { %>
+            <option value="<%=category %> " <%=product.category === category ? "selected": "" %>><%=category %></option>
+  
+         <% } %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" name="price"  id="price" value="<%=product.price %>" placeholder="Product price" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <br>
+        <textarea name="description" name="description"   id="description" cols="50" rows="5"><%=product.description%></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="image"> Add More Images</label>
+        <input type="file"  id="image" name="image"   placeholder="Upload image" multiple  >
+      </div>
+
+      <div class="mb-3 holding-images-to-delete">
+        <% product.image.forEach((img, index) => { %>
+          <div class="grid-item" id="image-container-<%= index %>">
+            <img src="<%= img.thumbnail %> " class="" alt="">
+          <div>
+            <input type="checkbox" id="image-<%= index %>" name="deleteImages[]" value="<%= img.filename %>">
+            <label for="image-<%= index %>">Delete?</label>
+          </div>
+          </div>
+        <% }) %>
+      </div>
+      
+      <!-- Delete button -->
+      <button id="delete-selected-btn"  class="btn btn-danger">Delete Selected Images</button>
+
+      <button  type="submit">Submit</button>
+
+    </form>
+   
+    <a href="/admin#PRODUCT"> Back</a>
+  </section>
+
+
+<script>
+  // Add event listener to delete button
+  document.getElementById('delete-selected-btn').addEventListener('click', function () {
+    // Get all checked checkboxes
+    const checkboxes = document.querySelectorAll('input[name="deleteImages[]"]:checked');
+    
+    // Collect filenames of selected images for deletion
+    const imagesToDelete = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+    if (imagesToDelete.length > 0) {
+      // Send request to the server to delete selected images
+      fetch('/api/products/delete-images', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ deleteImages: imagesToDelete, productId: '<%= product._id %>' })  // Pass the product ID along with filenames
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Remove images from the UI
+          checkboxes.forEach(checkbox => {
+            const containerId = checkbox.id.replace('image-', 'image-container-');
+            const imageContainer = document.getElementById(containerId);
+            if (imageContainer) {
+              imageContainer.remove();  // Remove the image from the UI
+            }
+          });
+        } else {
+          console.error('Failed to delete images:', data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  });

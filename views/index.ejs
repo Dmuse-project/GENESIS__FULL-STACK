@@ -1,0 +1,15 @@
+<%- include('layout') %>
+
+<h1>All Blog Posts</h1>
+<a href="/blogs/new">Create New Blog Post</a>
+<ul>
+    <% blogs.forEach(function(blog) { %>
+        <li>
+            <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+            <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+            <a href="/blogs/<%= blog._id %>/edit">Edit</a>
+        </li>
+    <% }); %>
+</ul>

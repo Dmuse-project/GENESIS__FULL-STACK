@@ -1,0 +1,17 @@
+<section class="counter" id="Counter">
+    <h1>Update Solar Data</h1>
+<!-- UDATING COUNTER -->
+
+  <form id="updateForm"   action="/admin/<%=solarData.id%>?_method=PUT"  method="POST">
+    <label for="installations">Installations:</label>
+    <input type="number" id="installations" name="installations" placeholder="Installation" value="<%= solarData.installations %>"><br>
+    <label for="totalEnergy">Total Energy (kWh):</label>
+    <input type="number" step="0.1" id="totalEnergy" name="totalEnergy"  placeholder="Total Energy" value="<%= solarData.totalEnergy %>"><br>
+    <label for="CO2Saved">CO2 Saved (tons):</label>
+    <input type="number" step="0.1" id="CO2Saved" name="CO2Saved" placeholder="CO2Saved"   value="<%= solarData.CO2Saved %>"><br>
+    <button type="submit">Update</button>
+  </form>
+  
+<a href="/admin">Back to Main Page</a>
+
+</section>

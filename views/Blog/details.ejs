@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details </title>
+</head>
+<body>
+    
+
+        <h1><%=blogs.title%></h1>
+        <h4> Author: <%=blogs.author%></h4>
+        <p> Date: <%=blogs.createdAt.toLocaleDateString("en-US", {weekday:"long", year:"numeric", month:"long",day:"numeric"})%></p>
+
+        <li>
+           Niche:  <a href="/Blog?category=<%=blogs.category%>"><%=blogs.category%></a>
+           
+         
+        </li>
+        <li>
+           Category:   <a href="/Blog?tag=<%=blogs.tag%>"><%=blogs.tag%></a>
+            
+        </li>
+
+        <div class="products__body__card__imgs">
+        
+          
+         <%blogs.image.forEach(image => { %>
+      
+          <img src="<%= image.url %>" alt="<%= image.filename %>" />
+      
+      <% }); %>
+      </div> 
+
+        <p> Description: <%=blogs.description%></p>
+        <p> Description: <%=blogs.title%></p>
+
+        <a href="/Blog">Blogs</a>
+        <a href="/Blog/<%=blogs.id%>/edit">Edit Blog</a>
+        <br>
+        <br>
+
+        <form action="/Blog/<%=blogs.id%>?_method=DELETE" method="POST">
+         <button>Delete</button>
+        </form>
+ 
+    
+</body>
+</html>
+

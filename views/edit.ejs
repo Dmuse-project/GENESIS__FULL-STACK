@@ -1,0 +1,12 @@
+<%- include('layout') %>
+
+<h1>Edit Blog Post</h1>
+<form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" name="blog[title]" id="title" value="<%= blog.title %>" required>
+    <label for="content">Content:</label>
+    <textarea name="blog[content]" id="content" required><%= blog.content %></textarea>
+    <label for="author">Author:</label>
+    <input type="text" name="blog[author]" id="author" value="<%= blog.author %>" required>
+    <button type="submit">Update</button>
+</form>

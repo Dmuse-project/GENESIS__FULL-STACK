@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis</title>
+
+<!-- Mapbox Geocoder CSS -->
+<!-- <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1/mapbox-gl-geocoder.css" rel="stylesheet" /> -->
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+
+    <!-- <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' /> -->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <div class="container">
+        <%- include("../partials/nav") %>
+        
+        <%- body %>
+        <%- include("../partials/footer") %>
+    </div>
+    <!-- <script src="/admin.js"></script> -->
+    <!-- <script src="/main.js"></script> -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+<script>
+    // Mapbox access token
+    mapboxgl.accessToken = "pk.eyJ1IjoibXVzZS10ZWNoIiwiYSI6ImNsaHdyOGlnZDBta3QzbXBjaGF1YmN1bXUifQ.3E71fRTAOu_un6LlVhUMEA"; 
+
+    // Initialize the map
+    const map = new mapboxgl.Map({
+        container: 'company-map',
+        style: 'mapbox://styles/mapbox/dark-v10',
+        center: [6.186971, 6.744776],  // Your company's coordinates
+        zoom: 6
+    });
+
+    // Add zoom and rotation controls to the map
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // Add a marker for your company's location
+    const companyMarker = new mapboxgl.Marker({ color: 'blue' })
+        .setLngLat([6.186971, 6.744776])  // Replace with your company's longitude and latitude
+        .addTo(map);
+
+    // Add a popup to the marker
+    const popup = new mapboxgl.Popup({ offset: 25 })
+        .setText('Genesis Eco-power Systems');  // Replace with your company's name
+    companyMarker.setPopup(popup);  // Attach the popup to the marker
+</script>
+
+
+ 
+</body>
+</html>
+

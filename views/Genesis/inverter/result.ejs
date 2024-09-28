@@ -1,0 +1,11 @@
+ 
+
+<%=layout("layouts/template") %>
+  <h1>Power Load Calculation Result</h1>
+  <p>Total Power Load: <%= totalPowerLoad %> W</p>
+  <h2>Recommended Inverter</h2>
+  <p>Model: <%= recommendedInverter.model %></p>
+  <p>Description: <%= recommendedInverter.description %></p>
+  <p>Max Load: <%= recommendedInverter.maxLoad %> W</p>
+  <p>Price: <%= recommendedInverter.price %>M</p>
+  <a href="/home">Go Back</a>
